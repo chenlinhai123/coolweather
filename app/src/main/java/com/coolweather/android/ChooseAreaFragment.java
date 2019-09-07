@@ -193,9 +193,9 @@ public class ChooseAreaFragment extends Fragment {
      * 根据传入的地址和类型从服务器上查询省市县数据
      * */
 
-    private void queryFromServer(String addrss,final String type){
+    private void queryFromServer(String address,final String type){
         showProgressDialog();
-        HttpUtil.sendOkHttpReQuest(addrss, new Callback() {
+        HttpUtil.sendOkHttpReQuest(address, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 //通过runOnUiThread()方法回到主线程处理逻辑
