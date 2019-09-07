@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.coolweather.android.gson.Weather;
+import com.coolweather.android.util.Utility;
 
 import org.w3c.dom.Text;
 
@@ -56,6 +60,15 @@ public class WeatherActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         String weatherString = prefs.getString("weather",null);
-        //待续
+        if (weatherString != null){
+            //有缓存时直接解析天气数据
+            Weather weather = Utility.handleWeatherResponse(weatherString);
+            showWeatherInfo(weather);
+        }else{
+            //无缓存时区服务器查询天气
+            String weatherId = getIntent().getStringExtra("weather_id");
+            weatherLayout.setVisibility(View.INVISIBLE);
+            requestWeather(weatherId);
+        }
     }
 }
